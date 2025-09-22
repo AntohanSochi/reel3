@@ -1,0 +1,62 @@
+
+<div class="container mx-auto px-4 py-8">
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-extrabold">Support Center</h1>
+    <p class="text-lg text-brand-muted mt-2">We're here to help you.</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- FAQ and Contacts -->
+    <div class="lg:col-span-2">
+      <div class="bg-brand-surface border border-brand-border rounded-xl p-6 mb-8">
+        <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+        <p class="text-brand-muted">For urgent issues, you can reach us via:</p>
+        <ul class="mt-2 space-y-1">
+          <li><strong>Telegram:</strong> <a href="https://t.me/ReelGenix-Help" target="_blank" class="text-brand-a3 hover:underline">@ReelGenix-Help</a></li>
+          <li><strong>Email:</strong> <a href="mailto:reelgenix@gmail.com" class="text-brand-a3 hover:underline">reelgenix@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="bg-brand-surface border border-brand-border rounded-xl p-6">
+        <h3 class="text-xl font-bold mb-4">Frequently Asked Questions</h3>
+        <div class="space-y-4">
+          @if(isLoadingFaq()) {
+            <p class="text-brand-muted">Loading FAQ...</p>
+          } @else {
+            @for(item of faq(); track item.q) {
+              <details class="group">
+                <summary class="flex justify-between items-center font-semibold cursor-pointer text-brand-text group-hover:text-brand-a1 list-none">
+                  {{ item.q }}
+                  <span class="transition-transform transform group-open:rotate-180">&darr;</span>
+                </summary>
+                <p class="text-brand-muted mt-2 pl-2 border-l-2 border-brand-border">{{ item.a }}</p>
+              </details>
+            }
+          }
+        </div>
+      </div>
+    </div>
+    
+    <!-- Create Ticket Form -->
+    <div class="bg-brand-surface border border-brand-border rounded-xl p-6 h-fit">
+      <h3 class="text-xl font-bold mb-4">Create a Ticket</h3>
+      <form (ngSubmit)="submitTicket()">
+        <div class="mb-4">
+          <label for="subject" class="block text-brand-muted mb-2">Subject</label>
+          <input type="text" id="subject" name="subject" [(ngModel)]="ticket.subject" required
+                 class="w-full bg-brand-elevated border border-brand-border rounded-lg p-2 focus:ring-2 focus:ring-brand-a1 outline-none transition">
+        </div>
+        <div class="mb-6">
+          <label for="message" class="block text-brand-muted mb-2">Message</label>
+          <textarea id="message" name="message" rows="5" [(ngModel)]="ticket.message" required
+                    class="w-full bg-brand-elevated border border-brand-border rounded-lg p-2 focus:ring-2 focus:ring-brand-a1 outline-none transition"></textarea>
+        </div>
+        <button type="submit" [disabled]="isSubmittingTicket()"
+                class="w-full h-12 rounded-lg font-semibold text-white transition-opacity disabled:opacity-50"
+                style="background: var(--brand-gradient);">
+          {{ isSubmittingTicket() ? 'Submitting...' : 'Submit Ticket' }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

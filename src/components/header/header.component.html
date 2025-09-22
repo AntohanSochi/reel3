@@ -1,0 +1,26 @@
+
+<header class="fixed top-0 left-0 right-0 z-40 h-[72px] bg-brand-bg/60 backdrop-blur-xl border-b border-brand-border/50">
+  <div class="container mx-auto px-4 h-full flex items-center justify-between">
+    <a href="#/home" class="flex items-center gap-2">
+       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="logo-gradient" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="var(--a1)"/>
+            <stop offset="45%" stop-color="var(--a2)"/>
+            <stop offset="100%" stop-color="var(--a3)"/>
+          </linearGradient>
+        </defs>
+        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M2 17L12 22L22 17" stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M2 12L12 17L22 12" stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="text-xl font-bold text-brand-text">ReelGenix</span>
+    </a>
+
+    <button (click)="onToggleSidebar()" class="burger-button" aria-label="Open menu">
+      <div class="burger-line top"></div>
+      <div class="burger-line middle"></div>
+      <div class="burger-line bottom"></div>
+    </button>
+  </div>
+</header>

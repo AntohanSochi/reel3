@@ -1,0 +1,108 @@
+
+.background-container {
+  background-color: var(--bg);
+}
+
+.reduced-motion .mesh-gradient,
+.reduced-motion .aurora-container,
+.reduced-motion .particles {
+  animation: none !important;
+  opacity: 1; /* Keep a static version */
+}
+
+.reduced-motion .particles {
+  display: none;
+}
+
+/* Layer 1: Mesh Gradient */
+.mesh-gradient {
+  position: absolute;
+  inset: 0;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(at 20% 25%, hsla(260, 100%, 50%, 0.15) 0px, transparent 50%),
+    radial-gradient(at 80% 20%, hsla(190, 100%, 50%, 0.1) 0px, transparent 50%),
+    radial-gradient(at 25% 80%, hsla(280, 100%, 60%, 0.12) 0px, transparent 50%),
+    radial-gradient(at 75% 75%, hsla(320, 100%, 50%, 0.08) 0px, transparent 50%);
+  animation: move-gradient 24s ease infinite alternate;
+  will-change: background;
+}
+
+@keyframes move-gradient {
+  0% {
+    background-position: 0% 50%, 50% 0%, 100% 50%, 50% 100%;
+  }
+  100% {
+    background-position: 100% 50%, 50% 100%, 0% 50%, 50% 0%;
+  }
+}
+
+/* Layer 2: Aurora Blobs */
+.aurora-container {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+.aurora-blob {
+  position: absolute;
+  mix-blend-mode: screen;
+  filter: blur(80px);
+  border-radius: 50%;
+  will-change: transform, opacity;
+}
+.aurora-blob.one {
+  width: 50vw;
+  height: 50vw;
+  max-width: 600px;
+  max-height: 600px;
+  top: 5%;
+  left: 10%;
+  background: radial-gradient(circle, rgba(162, 89, 255, 0.4) 0%, rgba(162, 89, 255, 0) 70%);
+  animation: float 18s ease-in-out infinite alternate;
+}
+.aurora-blob.two {
+  width: 40vw;
+  height: 40vw;
+  max-width: 500px;
+  max-height: 500px;
+  top: 50%;
+  left: 60%;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.3) 0%, rgba(0, 212, 255, 0) 70%);
+  animation: float 22s ease-in-out infinite alternate;
+}
+.aurora-blob.three {
+  width: 30vw;
+  height: 30vw;
+  max-width: 400px;
+  max-height: 400px;
+  top: 60%;
+  left: 5%;
+  background: radial-gradient(circle, rgba(106, 0, 255, 0.25) 0%, rgba(106, 0, 255, 0) 70%);
+  animation: float 20s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+  50% { transform: translate(40px, 20px) scale(1.1); opacity: 1; }
+  100% { transform: translate(-20px, -30px) scale(1); opacity: 0.8; }
+}
+
+
+/* Layer 3: Canvas Particles */
+.particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Layer 4: Noise Overlay */
+.noise-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXVpaWl9fX1wcHDExMSKiopQUFBMTEyRkZGtra2dnZ2GhoaPi4tDQ0MGBgZGRkZOTk5ISEhHR0d/f3/5+fr///3r6+s+pG2sAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA▒LnQU1BAACxjwv8YQUAAAAnSURBVHgB7dDBCQAwEACxDv6/vTfR4Gwb90xLUJ/e6goAAAAAAAAAAAAAAAD4GgL9AQI+R9XCAAAAAElFTkSuQmCC');
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+}

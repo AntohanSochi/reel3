@@ -1,0 +1,59 @@
+
+<div class="container mx-auto px-4 py-8">
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-extrabold">Our Products</h1>
+    <p class="text-lg text-brand-muted mt-2">Explore our suite of AI-powered tools designed for modern bloggers.</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    @for (product of products(); track product.key) {
+      <div 
+        (click)="openProductModal(product)"
+        class="group relative bg-brand-surface border border-brand-border rounded-xl p-6 cursor-pointer transition-all duration-300 hover:-translate-y-2 overflow-hidden"
+      >
+        <div class="absolute top-0 right-0 h-24 w-24 bg-[radial-gradient(circle_at_top_right,var(--a1)_0%,transparent_60%)] opacity-20 group-hover:opacity-40 transition-opacity duration-300"></div>
+        <div class="relative z-10">
+          <div class="w-12 h-12 rounded-lg bg-brand-elevated flex items-center justify-center mb-4 border border-brand-border">
+            <span class="text-2xl font-bold bg-clip-text text-transparent" style="background-image: var(--brand-gradient);">{{ product.name.charAt(0) }}</span>
+          </div>
+          <h3 class="text-xl font-bold text-brand-text mb-2">{{ product.name }}</h3>
+          <p class="text-brand-muted text-sm min-h-[60px]">{{ product.description }}</p>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 h-1 bg-brand-a2/50 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+      </div>
+    }
+  </div>
+</div>
+<!-- A simple modal placeholder -->
+@if(selectedProduct(); as product) {
+<div class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4" (click)="closeModal()">
+  <div class="bg-brand-elevated border border-brand-border rounded-2xl p-8 max-w-lg w-full" (click)="$event.stopPropagation()">
+    <h2 class="text-2xl font-bold mb-4">{{ product.name }}</h2>
+    <p class="text-brand-muted mb-6">{{ product.description }}</p>
+    <form>
+       @for(field of product.fields; track field.name) {
+          <div class="mb-4">
+            <label class="block text-brand-muted mb-2">{{ field.label }}</label>
+            @if(field.type === 'text') {
+              <input type="text" class="w-full bg-brand-surface border border-brand-border rounded-lg p-2 focus:ring-2 focus:ring-brand-a1 outline-none">
+            }
+            @if(field.type === 'textarea') {
+              <textarea class="w-full bg-brand-surface border border-brand-border rounded-lg p-2 focus:ring-2 focus:ring-brand-a1 outline-none" rows="4"></textarea>
+            }
+            @if(field.type === 'select') {
+              <select class="w-full bg-brand-surface border border-brand-border rounded-lg p-2 focus:ring-2 focus:ring-brand-a1 outline-none">
+                @for(option of field.options; track option) {
+                  <option>{{option}}</option>
+                }
+              </select>
+            }
+          </div>
+       }
+       <div class="flex justify-end gap-4 mt-8">
+        <button type="button" (click)="closeModal()" class="px-6 py-2 rounded-lg bg-brand-surface border border-brand-border hover:border-brand-a3 text-brand-text transition">Cancel</button>
+        <button type="submit" class="px-6 py-2 rounded-lg text-white font-semibold" style="background: var(--brand-gradient);">Generate</button>
+       </div>
+    </form>
+  </div>
+</div>
+}

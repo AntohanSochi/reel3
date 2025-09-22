@@ -1,0 +1,35 @@
+
+<div class="container mx-auto px-4 py-8 max-w-3xl">
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-extrabold">Refer & Earn</h1>
+    <p class="text-lg text-brand-muted mt-2">Share ReelGenix with your friends and earn rewards!</p>
+  </div>
+
+  @if(isLoading()) {
+    <div class="text-center text-brand-muted">Loading your referral data...</div>
+  } @else if (referralData(); as data) {
+    <div class="bg-brand-surface border border-brand-border rounded-xl p-8 mb-8">
+      <p class="text-brand-muted mb-2">Your Referral Link</p>
+      <div class="flex flex-col sm:flex-row gap-2">
+        <input type="text" [value]="data.link" readonly class="flex-grow bg-brand-elevated border border-brand-border rounded-lg p-3 outline-none">
+        <button (click)="copyToClipboard(data.link)" class="h-12 px-6 rounded-lg font-semibold bg-brand-elevated border border-brand-border hover:border-brand-a1 transition-colors">Copy</button>
+      </div>
+      <div class="mt-4">
+        <button (click)="shareOnTelegram(data.link)" class="h-12 w-full sm:w-auto px-6 rounded-lg font-semibold text-white transition-colors" style="background: var(--brand-gradient);">
+          Share on Telegram
+        </button>
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div class="bg-brand-surface border border-brand-border rounded-xl p-6 text-center">
+        <h4 class="text-brand-muted font-semibold mb-2">Referred Users</h4>
+        <p class="text-5xl font-bold text-brand-a3">{{ data.referredUsers }}</p>
+      </div>
+      <div class="bg-brand-surface border border-brand-border rounded-xl p-6 text-center">
+        <h4 class="text-brand-muted font-semibold mb-2">Total Earnings</h4>
+        <p class="text-5xl font-bold text-brand-a4">{{ data.earnings }}₽</p>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,73 @@
+
+<div class="container mx-auto px-4 py-8 animate-fade-in">
+  <!-- Hero Block -->
+  <section class="text-center mb-16">
+    <h1 class="text-4xl md:text-5xl font-extrabold mb-3">
+      Welcome back, {{ user()?.firstName }}!
+    </h1>
+    <h2 class="text-xl md:text-2xl font-semibold bg-clip-text text-transparent" style="background-image: var(--brand-gradient);">
+      ReelGenixBloggerKit Dashboard
+    </h2>
+    <p class="text-brand-muted max-w-2xl mx-auto mt-4">
+      Automate your workflow: from content generation and trend analysis to auto-posting and monetization. Let's create something amazing today.
+    </p>
+  </section>
+
+  <!-- Quick Actions -->
+  <section class="mb-16">
+    <h3 class="text-2xl font-bold mb-6 text-center">Quick Actions</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for(action of quickActions(); track action.name) {
+        <div class="bg-brand-surface/50 border border-brand-border rounded-xl p-6 hover:-translate-y-1 hover:shadow-glow-purple transition-all duration-300 cursor-pointer">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-lg bg-brand-elevated flex items-center justify-center">
+              <!-- Placeholder for feather icons -->
+              <span class="text-brand-a1 text-2xl font-bold">{{ action.name.charAt(0) }}</span>
+            </div>
+            <div>
+              <h4 class="font-bold text-lg text-brand-text">{{ action.name }}</h4>
+              <p class="text-brand-muted text-sm">{{ action.description }}</p>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Recent Generations -->
+  <section>
+    <h3 class="text-2xl font-bold mb-6 text-center">Recent Generations</h3>
+    <div class="max-w-3xl mx-auto bg-brand-surface/50 border border-brand-border rounded-xl p-4">
+      <ul class="divide-y divide-brand-border">
+        @for(item of recentGenerations(); track item.id) {
+          <li class="py-4 px-2 flex justify-between items-center hover:bg-brand-elevated/50 rounded-md transition-colors">
+            <div>
+              <span class="px-2 py-1 text-xs font-semibold rounded-full mr-3"
+                [ngClass]="{
+                  'bg-brand-a1/20 text-brand-a1': item.type === 'TrendPulse',
+                  'bg-brand-a3/20 text-brand-a3': item.type === 'ContentForge',
+                  'bg-brand-a4/20 text-brand-a4': item.type === 'AdGenius'
+                }">
+                {{ item.type }}
+              </span>
+              <span class="font-semibold text-brand-text">{{ item.title }}</span>
+            </div>
+            <span class="text-sm text-brand-muted">{{ item.date | date:'short' }}</span>
+          </li>
+        } @empty {
+          <p class="text-center text-brand-muted py-8">No generations yet. Try one of the quick actions to get started!</p>
+        }
+      </ul>
+    </div>
+  </section>
+</div>
+
+<style>
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out forwards;
+  }
+</style>

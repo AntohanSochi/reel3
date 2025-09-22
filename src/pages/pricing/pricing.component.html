@@ -1,0 +1,50 @@
+
+<div class="container mx-auto px-4 py-8">
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-extrabold">Flexible Pricing</h1>
+    <p class="text-lg text-brand-muted mt-2">Choose a plan that fits your creative workflow.</p>
+  </div>
+
+  <!-- Subscription Plans -->
+  <section class="mb-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      @for (plan of subscriptions(); track plan.name) {
+        <div class="flex flex-col bg-brand-surface border border-brand-border rounded-xl p-6 relative overflow-hidden" [class.border-brand-a1]="plan.isPopular" [class.shadow-glow-purple]="plan.isPopular">
+          @if(plan.isPopular) {
+            <div class="absolute top-0 right-0 bg-brand-a1 text-white text-xs font-bold px-4 py-1 rounded-bl-lg">POPULAR</div>
+          }
+          <h3 class="text-2xl font-bold text-brand-text">{{ plan.name }}</h3>
+          <p class="text-4xl font-extrabold my-4">{{ plan.price }} <span class="text-lg font-medium text-brand-muted">{{ plan.period }}</span></p>
+          <ul class="flex-grow space-y-3 text-brand-muted mb-6">
+            @for(feature of plan.features; track feature) {
+              <li class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-brand-success" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                <span>{{ feature }}</span>
+              </li>
+            }
+          </ul>
+          <button class="w-full mt-auto h-11 rounded-lg font-semibold transition-colors" [ngClass]="plan.isPopular ? 'bg-brand-a2 text-white hover:bg-brand-a1' : 'bg-brand-elevated text-brand-text hover:bg-brand-a2'">
+            Choose Plan
+          </button>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- One-time Packages -->
+  <section>
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-bold">One-Time Packages</h2>
+      <p class="text-brand-muted mt-2">Top up your generations anytime.</p>
+    </div>
+    <div class="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+      @for(pack of packages(); track pack.name) {
+        <div class="bg-brand-surface border border-brand-border rounded-xl p-6 text-center">
+          <h4 class="text-lg font-bold text-brand-text">{{ pack.name }}</h4>
+          <p class="text-3xl font-extrabold my-3">{{ pack.price }}</p>
+          <button class="w-full h-10 rounded-lg font-semibold bg-brand-elevated text-brand-text hover:bg-brand-a2 transition-colors">Buy Now</button>
+        </div>
+      }
+    </div>
+  </section>
+</div>

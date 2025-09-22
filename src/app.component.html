@@ -1,0 +1,17 @@
+
+<div class="relative min-h-screen w-full overflow-x-hidden">
+  <app-animated-background></app-animated-background>
+
+  <div class="relative z-10 flex flex-col min-h-screen">
+    @if (isLoggedIn()) {
+      <app-header (toggleSidebar)="toggleSidebar()"></app-header>
+      <app-sidebar [isOpen]="isSidebarOpen()"></app-sidebar>
+    }
+    
+    <main class="flex-grow pt-20">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+  
+  <app-toast></app-toast>
+</div>

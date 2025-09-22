@@ -1,0 +1,48 @@
+
+<aside 
+  class="fixed top-0 right-0 z-30 h-full w-[280px] bg-brand-surface/70 backdrop-blur-2xl border-l border-brand-border/50 transition-transform duration-300 ease-in-out"
+  [class.translate-x-0]="isOpen()"
+  [class.translate-x-full]="!isOpen()"
+>
+  <div class="h-full flex flex-col pt-[96px] pb-6">
+    <nav class="flex-grow px-4">
+      <ul class="flex flex-col gap-2">
+        <li>
+          <a routerLink="/home" routerLinkActive="active" class="nav-link">Home</a>
+        </li>
+        <li>
+          <a routerLink="/products" routerLinkActive="active" class="nav-link">Products</a>
+        </li>
+        <li>
+          <a routerLink="/pricing" routerLinkActive="active" class="nav-link">Pricing</a>
+        </li>
+        <li>
+          <a routerLink="/referrals" routerLinkActive="active" class="nav-link">Referrals</a>
+        </li>
+        <li>
+          <a routerLink="/support" routerLinkActive="active" class.nav-link>Support</a>
+        </li>
+        @if(isAdmin()) {
+          <li>
+            <a routerLink="/admin" routerLinkActive="active" class="nav-link">Admin Panel</a>
+          </li>
+        }
+      </ul>
+    </nav>
+
+    <div class="px-4">
+      @if (user(); as u) {
+        <div class="flex items-center gap-3 p-3 rounded-lg bg-brand-elevated/50 border border-brand-border">
+          <img [src]="u.avatar" alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-brand-a1">
+          <div>
+            <p class="font-semibold text-brand-text">{{ u.firstName }} {{ u.lastName }}</p>
+            <p class="text-sm text-brand-muted capitalize">{{ u.role }}</p>
+          </div>
+        </div>
+      }
+      <button (click)="logout()" class="w-full mt-4 h-11 flex items-center justify-center rounded-lg bg-brand-elevated hover:bg-brand-danger/20 border border-brand-border hover:border-brand-danger transition-colors text-brand-muted hover:text-brand-danger">
+        Logout
+      </button>
+    </div>
+  </div>
+</aside>

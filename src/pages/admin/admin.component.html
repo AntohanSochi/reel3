@@ -1,0 +1,81 @@
+
+<div class="container mx-auto px-4 py-8">
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-extrabold">Admin Panel</h1>
+    <p class="text-lg text-brand-muted mt-2">System overview and statistics.</p>
+  </div>
+  
+  @if(isLoading()) {
+    <div class="text-center text-brand-muted">Loading admin data...</div>
+  } @else if(stats(); as s) {
+    <!-- Stat Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div class="bg-brand-surface border border-brand-border rounded-xl p-6">
+        <h4 class="text-brand-muted font-semibold mb-2">Total Users</h4>
+        <p class="text-4xl font-bold text-brand-text">{{ s.totalUsers.toLocaleString() }}</p>
+      </div>
+      <div class="bg-brand-surface border border-brand-border rounded-xl p-6">
+        <h4 class="text-brand-muted font-semibold mb-2">Monthly Revenue</h4>
+        <p class="text-4xl font-bold text-brand-success">{{ s.monthlyRevenue.toLocaleString() }}₽</p>
+      </div>
+      <div class="bg-brand-surface border border-brand-border rounded-xl p-6">
+        <h4 class="text-brand-muted font-semibold mb-2">Active Subscriptions</h4>
+        <p class="text-4xl font-bold text-brand-text">{{ s.activeSubscriptions.toLocaleString() }}</p>
+      </div>
+      <div class="bg-brand-surface border border-brand-border rounded-xl p-6">
+        <h4 class="text-brand-muted font-semibold mb-2">Generations Today</h4>
+        <p class="text-4xl font-bold text-brand-text">{{ s.generationsToday.toLocaleString() }}</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Recent Generations -->
+      <div class="lg:col-span-2 bg-brand-surface border border-brand-border rounded-xl p-6">
+        <h3 class="text-xl font-bold mb-4">Recent Generations</h3>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="border-b border-brand-border">
+                  <th class="py-2 px-3 text-brand-muted font-semibold">User</th>
+                  <th class="py-2 px-3 text-brand-muted font-semibold">Type</th>
+                  <th class="py-2 px-3 text-brand-muted font-semibold">Timestamp</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for(gen of s.recentGenerations; track gen.timestamp) {
+                  <tr class="border-b border-brand-border/50">
+                    <td class="py-3 px-3">{{ gen.user }}</td>
+                    <td class="py-3 px-3">{{ gen.type }}</td>
+                    <td class="py-3 px-3 text-brand-muted">{{ gen.timestamp | date:'medium' }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+        </div>
+      </div>
+
+      <!-- System Status -->
+      <div class="bg-brand-surface border border-brand-border rounded-xl p-6">
+        <h3 class="text-xl font-bold mb-4">System Status</h3>
+        <ul class="space-y-3">
+          <li class="flex justify-between">
+            <span class="text-brand-muted">Frontend Version:</span>
+            <span class="font-semibold">{{ s.systemStatus.frontendVersion }}</span>
+          </li>
+          <li class="flex justify-between">
+            <span class="text-brand-muted">API Version:</span>
+            <span class="font-semibold">{{ s.systemStatus.apiVersion }}</span>
+          </li>
+          <li class="flex justify-between">
+            <span class="text-brand-muted">API Ping:</span>
+            <span class="font-semibold" [ngClass]="s.systemStatus.apiPing > 100 ? 'text-brand-warn' : 'text-brand-success'">{{ s.systemStatus.apiPing }}ms</span>
+          </li>
+          <li class="flex justify-between">
+            <span class="text-brand-muted">Errors (24h):</span>
+            <span class="font-semibold" [ngClass]="s.systemStatus.errors24h > 0 ? 'text-brand-danger' : 'text-brand-success'">{{ s.systemStatus.errors24h }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  }
+</div>

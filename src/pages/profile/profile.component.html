@@ -1,0 +1,47 @@
+
+<div class="container mx-auto px-4 py-8 max-w-2xl">
+  @if(user(); as u) {
+    <div class="text-center mb-12">
+      <img [src]="u.avatar" alt="User Avatar" class="w-28 h-28 rounded-full mx-auto mb-4 border-4 border-brand-a2 shadow-glow-brand">
+      <h1 class="text-4xl font-extrabold">{{ u.firstName }} {{ u.lastName }}</h1>
+      <p class="text-lg text-brand-muted">@{{ u.username }}</p>
+    </div>
+
+    <div class="bg-brand-surface border border-brand-border rounded-xl p-6 mb-8">
+      <h3 class="text-xl font-bold mb-4">Account Details</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <p class="text-sm text-brand-muted">Current Plan</p>
+          <p class="text-lg font-semibold text-brand-a1 capitalize">{{ u.plan }} Plan</p>
+        </div>
+        <div>
+          <p class="text-sm text-brand-muted">Generations Left</p>
+          <p class="text-lg font-semibold">{{ u.generationsLeft }}</p>
+        </div>
+        <div>
+          <p class="text-sm text-brand-muted">Subscription Expires</p>
+          <p class="text-lg font-semibold">{{ u.subscriptionExpires ? (u.subscriptionExpires | date:'longDate') : 'N/A' }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="bg-brand-surface border border-brand-border rounded-xl p-6 mb-8">
+      <h3 class="text-xl font-bold mb-4">Generation History</h3>
+      <ul>
+        @for(item of generationHistory; track item.title) {
+          <li class="flex justify-between items-center py-2 border-b border-brand-border/50">
+            <div>
+              <span class="font-semibold">{{ item.type }}:</span>
+              <span class="text-brand-muted"> {{ item.title }}</span>
+            </div>
+            <span class="text-sm text-brand-muted">{{ item.date }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+    
+    <button (click)="logout()" class="w-full h-12 flex items-center justify-center rounded-lg bg-brand-danger/20 hover:bg-brand-danger/40 border border-brand-danger/50 hover:border-brand-danger text-brand-danger font-bold transition-colors">
+      Log Out
+    </button>
+  }
+</div>
